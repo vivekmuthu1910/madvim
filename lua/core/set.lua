@@ -14,7 +14,13 @@ vim.opt.wrap = false
 
 vim.opt.swapfile = false
 vim.opt.backup = false
-vim.opt.undodir = os.getenv("USERPROFILE") .. "/.vim/undodir"
+
+if vim.loop.os_uname().sysname == "Windows_NT" then
+	vim.opt.undodir = os.getenv("USERPROFILE") .. "/.vim/undodir"
+else
+	vim.opt.undodir = os.getenv("HOME") .. "/.vim/undodir"
+end
+
 vim.opt.undofile = true
 
 vim.opt.hlsearch = false
@@ -28,4 +34,4 @@ vim.opt.isfname:append("@-@")
 
 vim.opt.updatetime = 50
 
-vim.opt.colorcolumn = "80"
+vim.opt.colorcolumn = "100"

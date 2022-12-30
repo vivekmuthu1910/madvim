@@ -13,10 +13,10 @@ local fullscreen = false
 vim.keymap.set("n", "<M-CR>", function()
 	if fullscreen then
 		fullscreen = false
-		g.neovide_fullscreen = true
+		g.neovide_fullscreen = false
 	else
 		fullscreen = true
-		g.neovide_fullscreen = false
+		g.neovide_fullscreen = true
 	end
 end)
 
@@ -30,5 +30,5 @@ if g.neovide then
 	g.neovide_remember_dimensions = true
 	g.neovide_scroll_animation_length = 0.2
 
-	vim.opt.guifont = { "JetBrainsMono NFM", ":h10" }
+	vim.opt.guifont = { "FantasqueSansMono NF", ":h10" }
 end

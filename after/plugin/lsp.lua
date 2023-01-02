@@ -19,9 +19,9 @@ lsp.setup_nvim_cmp({
 			local menu_icon = {
 				nvim_lsp = "λ",
 				luasnip = "⋗",
-				buffer = "Ω",
-				path = "🖫",
-				nvim_lua = "Π",
+				buffer = "📋",
+				path = "📁",
+				nvim_lua = "π",
 			}
 
 			item.menu = menu_icon[entry.source.name]

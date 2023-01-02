@@ -1,8 +1,15 @@
 vim.o.background = "dark"
-vim.cmd.colorscheme("gruvbox")
 
-vim.api.nvim_set_hl(0, "Normal", { bg = "none" })
-vim.api.nvim_set_hl(0, "NormalFloat", { bg = "none" })
+require("gruvbox").setup({
+	overrides = {
+		ColorColumn = { bg = "#331111" },
+		NormalFloat = { link = "Normal" },
+		FloatBorder = { link = "GruvboxFg4" },
+	},
+	transparent_mode = true,
+})
+
+vim.cmd.colorscheme("gruvbox")
 
 require("lualine").setup()
 

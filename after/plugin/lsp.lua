@@ -43,4 +43,29 @@ lsp.set_preferences({
 	set_lsp_keymaps = { omit = { "K", "<F2>", "<F4>" } },
 })
 
+lsp.on_attach(function(client, bufnr)
+	local opts = { buffer = bufnr, remap = false }
+	local bind = vim.keymap.set
+
+	bind("n", "<leader>lf", "<cmd>lua vim.lsp.buf.format()<cr>", opts)
+
+	if client.name == "sumneko_lua" then
+		client.server_capabilities.documentFormattingProvider = false
+		client.server_capabilities.documentFormattingRangeProvider = false
+	end
+end)
+
 lsp.setup()
+
+local null_ls = require("null-ls")
+local mason_nullls = require("mason-null-ls")
+
+mason_nullls.setup({
+	automatic_installation = true,
+	automatic_setup = true,
+})
+mason_nullls.setup_handlers({
+	stylua = function()
+		null_ls.register(null_ls.builtins.formatting.stylua)
+	end,
+})

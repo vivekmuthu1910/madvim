@@ -7,7 +7,7 @@ require("gruvbox").setup({
 		FloatBorder = { link = "GruvboxFg4" },
 		Folded = { link = "Normal" },
 		FoldColumn = { link = "LineNr" },
-        WinSeparator = { link = "GruvboxBg4"}
+		WinSeparator = { link = "GruvboxBg4" },
 	},
 	transparent_mode = true,
 })

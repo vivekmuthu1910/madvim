@@ -5,6 +5,8 @@ require("gruvbox").setup({
 		ColorColumn = { bg = "#331111" },
 		NormalFloat = { link = "Normal" },
 		FloatBorder = { link = "GruvboxFg4" },
+		Folded = { link = "Normal" },
+		FoldColumn = { link = "LineNr" },
 	},
 	transparent_mode = true,
 })

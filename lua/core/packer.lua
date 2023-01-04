@@ -33,7 +33,6 @@ return require("packer").startup(function(use)
 			{ "neovim/nvim-lspconfig" },
 			{ "williamboman/mason.nvim" },
 			{ "williamboman/mason-lspconfig.nvim" },
-
 			-- Autocompletion
 			{ "hrsh7th/nvim-cmp" },
 			{ "hrsh7th/cmp-buffer" },
@@ -68,10 +67,11 @@ return require("packer").startup(function(use)
 	use({ "ellisonleao/gruvbox.nvim" })
 	use({
 		"nvim-lualine/lualine.nvim",
-		requires = { "kyazdani42/nvim-web-devicons", opt = true },
 		requires = { "nvim-tree/nvim-web-devicons", opt = true },
 	})
 	use("nvim-tree/nvim-web-devicons")
+
+	-- Git
 	use({
 		"lewis6991/gitsigns.nvim",
 		config = function()
@@ -87,6 +87,8 @@ return require("packer").startup(function(use)
 			"nvim-tree/nvim-web-devicons", -- optional, for file icons
 		},
 	})
+
+	use({ "kevinhwang91/nvim-ufo", requires = "kevinhwang91/promise-async" })
 
 	if packer_bootstrap then
 		require("packer").sync()

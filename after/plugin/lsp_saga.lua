@@ -43,12 +43,18 @@ end, { silent = true })
 keymap("n", "<leader>o", "<cmd>LSoutlineToggle<CR>", { silent = true })
 
 -- Hover Doc
-keymap("n", "K", "<cmd>Lspsaga hover_doc<CR>", { silent = true })
+vim.keymap.set('n', 'K', function()
+    local winid = require('ufo').peekFoldedLinesUnderCursor()
+     if not winid then
+        require('lspsaga.hover'):render_hover_doc()
+     end
+ end)
 
 -- Float terminal
 keymap("n", "<A-d>", "<cmd>Lspsaga open_floaterm<CR>", { silent = true })
 -- if you want to pass some cli command into a terminal you can do it like this
 -- open lazygit in lspsaga float terminal
-keymap("n", "<A-d>", "<cmd>Lspsaga open_floaterm lazygit<CR>", { silent = true })
+-- keymap("n", "<A-d>", "<cmd>Lspsaga open_floaterm lazygit<CR>", { silent = true })
+
 -- close floaterm
 keymap("t", "<A-d>", [[<C-\><C-n><cmd>Lspsaga close_floaterm<CR>]], { silent = true })

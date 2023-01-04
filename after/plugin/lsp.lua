@@ -40,7 +40,7 @@ lsp.setup_nvim_cmp({
 })
 
 lsp.set_preferences({
-	set_lsp_keymaps = { omit = { "K" } },
+	set_lsp_keymaps = { omit = { "K", "<F2>", "<F4>" } },
 })
 
 lsp.setup()

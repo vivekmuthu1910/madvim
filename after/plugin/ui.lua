@@ -7,6 +7,7 @@ require("gruvbox").setup({
 		FloatBorder = { link = "GruvboxFg4" },
 		Folded = { link = "Normal" },
 		FoldColumn = { link = "LineNr" },
+        WinSeparator = { link = "GruvboxBg4"}
 	},
 	transparent_mode = true,
 })
@@ -30,7 +31,6 @@ vim.keymap.set("n", "<M-CR>", function()
 end)
 
 if g.neovide then
-	print("Neovide detected")
 	g.neovide_refresh_rate = 65
 	g.neovide_transparency = 0.8
 	g.neovide_cursor_animation_length = 0.05

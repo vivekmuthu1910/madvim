@@ -42,3 +42,6 @@ vim.opt.cursorline = true
 
 vim.opt.splitbelow = true
 vim.opt.splitright = true
+
+vim.o.cmdheight = 0
+vim.o.laststatus = 3

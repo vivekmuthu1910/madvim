@@ -11,13 +11,8 @@ require("mason").setup({
 
 local merge = vim.tbl_extend
 
-require("mason-lspconfig").setup()
-
-local saga = require("lspsaga")
-
-saga.init_lsp_saga()
-
-local on_attach = function(_, bufnr)
+core.lsp = {}
+core.lsp.on_attach = function(_, bufnr)
     -- Enable completion triggered by <c-x><c-o>
     vim.api.nvim_buf_set_option(bufnr, "omnifunc", "v:lua.vim.lsp.omnifunc")
 
@@ -105,8 +100,8 @@ local on_attach = function(_, bufnr)
     )
 
     -- Diagnostic jump can use `<c-o>` to jump back
-    vim.keymap.set("n", "[e", "<cmd>Lspsaga diagnostic_jump_prev<CR>", { silent = true })
-    vim.keymap.set("n", "]e", "<cmd>Lspsaga diagnostic_jump_next<CR>", { silent = true })
+    vim.keymap.set("n", "[d", "<cmd>Lspsaga diagnostic_jump_prev<CR>", { silent = true })
+    vim.keymap.set("n", "]d", "<cmd>Lspsaga diagnostic_jump_next<CR>", { silent = true })
 
     -- Only jump to error
     vim.keymap.set("n", "[E", function()
@@ -127,54 +122,37 @@ local on_attach = function(_, bufnr)
         end
     end)
 end
+local user_lsp = core.load_user_config("lsp") or {}
 
-require("mason-lspconfig").setup_handlers({
+require("mason-lspconfig").setup({
+    ensure_installed = user_lsp.ensure_installed or {},
+})
+
+local saga = require("lspsaga")
+
+saga.init_lsp_saga()
+
+require("mason-lspconfig").setup_handlers(vim.tbl_deep_extend("force", {
     -- The first entry (without a key) will be the default handler
     -- and will be called for each installed server that doesn't have
     -- a dedicated handler.
     function(server_name) -- default handler (optional)
         require("lspconfig")[server_name].setup({
-            on_attach = on_attach,
+            on_attach = core.lsp.on_attach,
             capabilities = require("cmp_nvim_lsp").default_capabilities(),
         })
     end,
+}, user_lsp.setup_handlers or {}))
 
-    -- Next, you can provide a dedicated handler for specific servers.
-    ["rust_analyzer"] = function()
-        local rt = require("rust-tools")
-        rt.setup({
-            on_attach = on_attach,
-            capabilities = require("cmp_nvim_lsp").default_capabilities(),
-        })
-    end,
-    ["sumneko_lua"] = function()
-        require("lspconfig")["sumneko_lua"].setup({
-            on_attach = function(client, bufnr)
-                on_attach(client, bufnr)
-                client.server_capabilities.documentFormattingProvider = false
-                client.server_capabilities.documentFormattingRangeProvider = false
-            end,
-            capabilities = require("cmp_nvim_lsp").default_capabilities(),
-            settings = {
-                Lua = {
-                    diagnostics = {
-                        globals = { "vim" },
-                    },
-                    runtime = {
-                        version = "LuaJIT",
-                        path = vim.split(package.path, ";"),
-                    },
-                    workspace = {
-                        library = {
-                            [vim.fn.expand("$VIMRUNTIME/lua")] = true,
-                            [vim.fn.expand("$VIMRUNTIME/lua/vim/lsp")] = true,
-                        },
-                    },
-                },
-            },
-        })
-    end,
-})
+local system_lsps = user_lsp.system_lsps or {}
+
+for server, settings in pairs(system_lsps) do
+    if type(server) == "number" then
+        require("lspconfig")[settings].setup()
+    else
+        require("lspconfig")[server].setup(settings)
+    end
+end
 
 require("mason").setup()
 require("mason-null-ls").setup({

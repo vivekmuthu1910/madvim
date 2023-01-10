@@ -148,7 +148,7 @@ local system_lsps = user_lsp.system_lsps or {}
 
 for server, settings in pairs(system_lsps) do
     if type(server) == "number" then
-        require("lspconfig")[settings].setup()
+        require("lspconfig")[settings].setup({})
     else
         require("lspconfig")[server].setup(settings)
     end
@@ -159,7 +159,11 @@ require("mason-null-ls").setup({
     automatic_installation = false,
     automatic_setup = true,
 })
-require("null-ls").setup()
+
+local null_ls_sources = user_lsp.null_ls_sources or {
+    sources = {},
+}
+require("null-ls").setup(null_ls_sources)
 
 require("mason-null-ls").setup_handlers()
 

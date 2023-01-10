@@ -7,8 +7,8 @@ vim.g.loaded_netrwPlugin = 1
 -- set termguicolors to enable highlight groups
 vim.opt.termguicolors = true
 
-vim.api.nvim_set_keymap("n", "<C-h>", ":NvimTreeToggle<cr>", { silent = true, noremap = true })
-vim.api.nvim_set_keymap("n", "<C-h>f", ":NvimTreeFindFile<cr>", { silent = true, noremap = true })
+vim.api.nvim_set_keymap("n", "<C-b>", ":NvimTreeToggle<cr>", { silent = true, noremap = true })
+vim.api.nvim_set_keymap("n", "<C-b>f", ":NvimTreeFindFile<cr>", { silent = true, noremap = true })
 
 -- empty setup using defaults
 require("nvim-tree").setup({
